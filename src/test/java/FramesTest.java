@@ -14,10 +14,11 @@ public class FramesTest {
     public void validateFrames() {
         System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
         driver = new ChromeDriver();
+        wait = new WebDriverWait(driver,20);
         driver.get("https://the-internet.herokuapp.com/frames");
         driver.manage().window().maximize();
         driver.findElement(By.cssSelector("[href='/iframe']")).click();
-        //  wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(text(),'iFrame')]"))); java.lang.NullPointerException
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(text(),'iFrame')]")));
         driver.switchTo().frame(driver.findElement(By.id("mce_0_ifr")));//mceu_13 no such frame: element is not a frame
         Assert.assertEquals(driver.findElement(By.xpath(String.format("//*[contains(text(),'Your content goes here.')]"))).getText(), "Your content goes here.");
         driver.switchTo().defaultContent();

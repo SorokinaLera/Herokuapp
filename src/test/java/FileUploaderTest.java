@@ -16,13 +16,14 @@ public class FileUploaderTest {
     public void validate() {
         System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
         driver = new ChromeDriver();
+        wait = new WebDriverWait(driver,20);
         driver.get("https://the-internet.herokuapp.com/upload");
         driver.manage().window().maximize();
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(Locator)); //не работает
+        wait.until(ExpectedConditions.visibilityOfElementLocated(Locator));
         //задача, в него отправить путь к файлу
         driver.findElement(By.id("file-upload")).sendKeys(System.getProperty("user.dir") + "/src/test/resources/Screenshot_8.png");
         driver.findElement(By.id("file-submit")).click();
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(String.format(UniversalLocator, "File Uploaded!"))));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(String.format(UniversalLocator, "File Uploaded!"))));
         Assert.assertEquals("Screenshot_8.png", driver.findElement(By.xpath("//*[@id=\"uploaded-files\"]")).getText());
         driver.close();
 
